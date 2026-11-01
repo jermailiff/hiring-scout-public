@@ -1,0 +1,145 @@
+{
+  "suiteId": "hiring-boundaries-v1",
+  "qualification": "Six synthetic development cases labeled by Jermaine before any model run, during prompt revision discussion. The unclear job-seeking wording was replaced and relabeled before freezing. Not an independent held-out evaluation or production accuracy estimate.",
+  "cases": [
+    {
+      "id": "reply-to-job-seekers",
+      "input": {
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": {
+          "text": "My co-founder and I are both job hunting after closing our startup.",
+          "relationship": "verified_direct_reply_to_parent"
+        },
+        "hiring_reference": null,
+        "text": "We are too.",
+        "thread_opening": {
+          "text": "Who else is hiring engineers?",
+          "relationship": "observed_in_conversation_not_verified_direct_reply"
+        }
+      },
+      "expected": {
+        "decision": "skip",
+        "reason": "The verified parent is explicitly job seeking; the opening hiring thread does not change that meaning."
+      }
+    },
+    {
+      "id": "reply-to-recruitment",
+      "input": {
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": {
+          "text": "We’re hiring two backend engineers. DM me.",
+          "relationship": "verified_direct_reply_to_parent"
+        },
+        "hiring_reference": null,
+        "text": "We are too.",
+        "thread_opening": {
+          "text": "Who else is hiring engineers?",
+          "relationship": "observed_in_conversation_not_verified_direct_reply"
+        }
+      },
+      "expected": {
+        "decision": "keep",
+        "reason": "The verified parent advertises hiring; the reply adopts that recruitment meaning."
+      }
+    },
+    {
+      "id": "reply-parent-unverified",
+      "input": {
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": {
+          "text": "Who else is hiring engineers?",
+          "relationship": "observed_in_conversation_not_verified_direct_reply"
+        },
+        "hiring_reference": null,
+        "text": "We are too."
+      },
+      "expected": {
+        "decision": "review",
+        "reason": "The hiring conversation does not establish which comment this reply answers."
+      }
+    },
+    {
+      "id": "build-hackathon",
+      "input": {
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": {
+          "status": "resolved",
+          "relationship": "quoted_post",
+          "referenceUrl": "https://example.test/synthetic/hackathon",
+          "source": {
+            "id": "hackathon",
+            "url": "https://example.test/synthetic/hackathon",
+            "author": "synthetic-author",
+            "authorLabel": "Synthetic author",
+            "text": "Join our weekend hackathon. Everyone welcome; no employment opportunities are being advertised.",
+            "postedAt": "2026-10-26T00:00:00Z",
+            "truncated": false,
+            "links": []
+          }
+        },
+        "text": "Come build with us."
+      },
+      "expected": {
+        "decision": "skip",
+        "reason": "The resolved quote explicitly invites hackathon participation, not employment."
+      }
+    },
+    {
+      "id": "build-recruitment",
+      "input": {
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": {
+          "status": "resolved",
+          "relationship": "quoted_post",
+          "referenceUrl": "https://example.test/synthetic/recruitment",
+          "source": {
+            "id": "recruitment",
+            "url": "https://example.test/synthetic/recruitment",
+            "author": "synthetic-author",
+            "authorLabel": "Synthetic author",
+            "text": "We’re hiring our first product engineer. Apply here.",
+            "postedAt": "2026-10-26T00:00:00Z",
+            "truncated": false,
+            "links": []
+          }
+        },
+        "text": "Come build with us."
+      },
+      "expected": {
+        "decision": "keep",
+        "reason": "The resolved quote explicitly advertises recruitment."
+      }
+    },
+    {
+      "id": "build-quote-unavailable",
+      "input": {
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": {
+          "status": "unavailable",
+          "relationship": "quoted_post",
+          "referenceUrl": null
+        },
+        "text": "Come build with us."
+      },
+      "expected": {
+        "decision": "review",
+        "reason": "The unavailable quote is needed to distinguish employment from another collaboration."
+      }
+    }
+  ]
+}

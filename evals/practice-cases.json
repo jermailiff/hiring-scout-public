@@ -1,0 +1,56 @@
+{
+  "suiteId": "hiring-practice-v1",
+  "qualification": "Five synthetic cases labeled with the user before any model run. Development/practice data, not an independent held-out evaluation or a production accuracy estimate.",
+  "cases": [
+    {
+      "id": "onboarding-owner",
+      "input": {
+        "text": "We need someone to own onboarding. Don’t care about your title—DM me examples of products you’ve shipped.",
+        "links": [], "author_type": "unknown", "input_incomplete": false,
+        "context": null, "hiring_reference": null
+      },
+      "expected": { "decision": "keep", "reason": "Direct recruitment for someone to own onboarding; a conventional role title is not required." }
+    },
+    {
+      "id": "healthcare-networking",
+      "input": {
+        "text": "Just closed our seed round. Excited to meet more people building in healthcare.",
+        "links": [], "author_type": "unknown", "input_incomplete": false,
+        "context": null, "hiring_reference": null
+      },
+      "expected": { "decision": "skip", "reason": "Funding and networking do not establish recruitment." }
+    },
+    {
+      "id": "ambiguous-thread-reply",
+      "input": {
+        "text": "We are too.",
+        "links": [], "author_type": "unknown", "input_incomplete": false,
+        "context": {
+          "text": "Who else is hiring product designers?",
+          "relationship": "observed_in_conversation_not_verified_direct_reply"
+        },
+        "hiring_reference": null
+      },
+      "expected": { "decision": "review", "reason": "The direct parent is unknown. The reply could respond to a different comment and does not independently establish employer hiring." }
+    },
+    {
+      "id": "historical-hiring-lessons",
+      "input": {
+        "text": "Our first ten hires came through Twitter. Here’s what we learned.",
+        "links": [], "author_type": "unknown", "input_incomplete": false,
+        "context": null, "hiring_reference": null
+      },
+      "expected": { "decision": "skip", "reason": "Retrospective hiring advice without a current recruitment invitation or a referenced recruiting post." }
+    },
+    {
+      "id": "ambiguous-build-invitation",
+      "input": {
+        "text": "Come build with us.",
+        "links": [], "author_type": "unknown", "input_incomplete": false,
+        "context": null,
+        "hiring_reference": { "status": "unavailable", "relationship": "quoted_post", "referenceUrl": null }
+      },
+      "expected": { "decision": "review", "reason": "The missing quote is needed to distinguish employment from a hackathon, open-source collaboration or another invitation." }
+    }
+  ]
+}

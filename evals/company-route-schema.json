@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "source_post_id": {
+      "type": "string"
+    },
+    "company_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "company_source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "application_routes": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "careers_page",
+              "job_page",
+              "email",
+              "dm",
+              "contact_page"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "value",
+          "source_id"
+        ]
+      }
+    },
+    "needs_lookup": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 500
+    }
+  },
+  "required": [
+    "source_post_id",
+    "company_name",
+    "company_source_ids",
+    "application_routes",
+    "needs_lookup",
+    "reason"
+  ]
+}

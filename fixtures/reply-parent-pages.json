@@ -1,0 +1,111 @@
+{
+  "qualification": "Synthetic minimal DOM examples, not captured X snapshots. Parent labels are author-specified test truth and are never embedded as DOM attributes or supplied to the collector. Tests characterize missing evidence, not live extraction accuracy.",
+  "cases": [
+    {
+      "id": "direct-looking-reply",
+      "description": "Recipient handle and adjacency do not identify the exact parent post.",
+      "html": "<article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/100\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring engineers.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [
+        "200"
+      ],
+      "knownDirectParents": {
+        "200": "100"
+      }
+    },
+    {
+      "id": "nested-jobseeker",
+      "description": "Hiring root is visible, but the target answers a job seeker.",
+      "html": "<article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/100\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring engineers.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">casey</div><a href=\"/casey/status/300\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are looking for our next jobs.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/casey\">@casey</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [
+        "300",
+        "200"
+      ],
+      "knownDirectParents": {
+        "300": "100",
+        "200": "300"
+      }
+    },
+    {
+      "id": "same-author-multiple-posts",
+      "description": "Replying to @alex cannot choose between two posts by Alex.",
+      "html": "<article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/100\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring engineers.</div></article><article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/101\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">Anyone joining the unpaid hackathon?</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [
+        "101",
+        "200"
+      ],
+      "knownDirectParents": {
+        "200": "101"
+      }
+    },
+    {
+      "id": "ranked-sibling-replies",
+      "description": "The immediately preceding comment is a sibling, not the target parent.",
+      "html": "<article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/100\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring engineers.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">pat</div><a href=\"/pat/status/301\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">Great news.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">casey</div><a href=\"/casey/status/300\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are looking for our next jobs.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [
+        "301",
+        "300",
+        "200"
+      ],
+      "knownDirectParents": {
+        "301": "100",
+        "300": "100",
+        "200": "100"
+      }
+    },
+    {
+      "id": "virtualized-root",
+      "description": "Previously observed root has scrolled out; its ID only proves discovery context.",
+      "html": "<article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": true,
+      "expectedIds": [
+        "200"
+      ],
+      "knownDirectParents": {
+        "200": "100"
+      }
+    },
+    {
+      "id": "recommendations-boundary",
+      "description": "Recommendation cards after the boundary are not replies in the sampled thread.",
+      "html": "<article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/100\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring engineers.</div></article><article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article><h2>Discover more</h2><article data-testid=\"tweet\"><div data-testid=\"User-Name\">other</div><a href=\"/other/status/999\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [
+        "200"
+      ],
+      "knownDirectParents": {
+        "200": "100"
+      }
+    },
+    {
+      "id": "quote-is-not-reply",
+      "description": "Identified quote is usable as a quote and must not become reply-parent metadata.",
+      "html": "<article data-testid=\"tweet\"><div data-testid=\"User-Name\">alex</div><a href=\"/alex/status/100\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring engineers.</div></article><article data-testid=\"tweet\"><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">Come build with us.</div><div role=\"link\"><div data-testid=\"User-Name\">employer</div><a href=\"/employer/status/400\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are hiring designers.</div></div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [
+        "200"
+      ],
+      "knownDirectParents": {},
+      "expectedQuoteId": "400"
+    },
+    {
+      "id": "unseen-root",
+      "description": "A missing root that was never observed does not identify any conversation cards.",
+      "html": "<article data-testid=\"tweet\"><div>Replying to <a href=\"/alex\">@alex</a></div><div data-testid=\"User-Name\">sam</div><a href=\"/sam/status/200\"><time datetime=\"2026-10-20T00:00:00Z\"></time></a><div data-testid=\"tweetText\">We are too.</div></article>",
+      "threadRoot": "100",
+      "rootAlreadySeen": false,
+      "expectedIds": [],
+      "knownDirectParents": {}
+    }
+  ]
+}

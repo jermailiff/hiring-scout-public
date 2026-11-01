@@ -1,0 +1,45 @@
+{
+  "name": "hiring-scout",
+  "version": "1.0.0",
+  "description": "Evidence-grounded hiring discovery with bounded collection, structured decisions and pipeline evaluation.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsx index.ts",
+    "check:login": "tsx check-login.ts",
+    "collect:x": "tsx collect-x.ts",
+    "test": "node --import tsx --test scheduler.test.ts x-posts.test.ts classification.test.ts hiring-context.test.ts evals/practice-eval.test.ts evals/run-practice.test.ts evals/source-evidence.test.ts hiring-pipeline.test.ts reply-parent.test.ts lead-flow.test.ts opportunities.test.ts application-follow-ups.test.ts careers-lookup.test.ts cloudflare-careers-renderer.test.ts company-discovery.test.ts monitor.test.ts",
+    "typecheck": "tsc --noEmit",
+    "eval:practice": "node --import tsx evals/run-practice.ts",
+    "evaluate:models": "tsx evaluate-models.ts",
+    "models:dev": "wrangler dev --config wrangler.models.jsonc --ip 127.0.0.1 --port 8791",
+    "classify": "tsx classify-posts.ts",
+    "scan:x": "tsx collect-x.ts && tsx classify-posts.ts",
+    "classify:dev": "wrangler dev --config wrangler.models.jsonc --ip 127.0.0.1 --port 8791 --var MAX_MODEL_CALLS:120",
+    "lookup:careers": "node --import tsx evals/lookup-careers.ts",
+    "replay:leads": "node --import tsx evals/replay-lead-flow.ts",
+    "discover:leads": "node --import tsx evals/discover-leads.ts",
+    "monitor": "node --import tsx monitor-cli.ts"
+  },
+  "keywords": [],
+  "author": "Jermaine Ijieh",
+  "license": "ISC",
+  "packageManager": "pnpm@10.24.0",
+  "type": "module",
+  "dependencies": {
+    "@browserbasehq/sdk": "^2.9.0",
+    "@browserbasehq/sdk-functions": "^1.0.3",
+    "dotenv": "^17.4.0",
+    "playwright-core": "^1.64.1",
+    "zod": "4.4.3",
+    "linkedom": "0.18.12"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.2",
+    "wrangler": "^4.152.0"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

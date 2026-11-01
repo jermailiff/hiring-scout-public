@@ -1,0 +1,118 @@
+{
+  "suiteId": "company-route-boundaries-v1",
+  "qualification": "Four assistant-authored synthetic development examples of the agreed contact rules, not independently user-labelled or held out. Domains and accounts are fictional; no messages are sent.",
+  "cases": [
+    {
+      "id": "explicit-dm",
+      "input": {
+        "post": {
+          "id": "explicit-dm",
+          "author": "synthetic_hirer",
+          "text": "We are hiring our first designer. DM @synthetic_hirer to apply.",
+          "url": "https://social.example/synthetic_hirer/status/explicit-dm"
+        },
+        "sources": [
+          {
+            "id": "post",
+            "url": "https://social.example/synthetic_hirer/status/explicit-dm",
+            "text": "We are hiring our first designer. DM @synthetic_hirer to apply."
+          }
+        ]
+      },
+      "expected": {
+        "company_name": null,
+        "routes": [
+          {
+            "kind": "dm",
+            "value": "@synthetic_hirer"
+          }
+        ],
+        "needs_lookup": false
+      }
+    },
+    {
+      "id": "explicit-email",
+      "input": {
+        "post": {
+          "id": "explicit-email",
+          "author": "cedar_founder",
+          "text": "Cedar Labs is hiring a product manager. Email jobs@cedar.example to apply.",
+          "url": "https://social.example/cedar_founder/status/explicit-email"
+        },
+        "sources": [
+          {
+            "id": "post",
+            "url": "https://social.example/cedar_founder/status/explicit-email",
+            "text": "Cedar Labs is hiring a product manager. Email jobs@cedar.example to apply."
+          }
+        ]
+      },
+      "expected": {
+        "company_name": "Cedar Labs",
+        "routes": [
+          {
+            "kind": "email",
+            "value": "jobs@cedar.example"
+          }
+        ],
+        "needs_lookup": false
+      }
+    },
+    {
+      "id": "unknown-client",
+      "input": {
+        "post": {
+          "id": "unknown-client",
+          "author": "pine_recruiter",
+          "text": "Our client is hiring a product manager. We will share the company and application details later.",
+          "url": "https://social.example/pine_recruiter/status/unknown-client"
+        },
+        "sources": [
+          {
+            "id": "post",
+            "url": "https://social.example/pine_recruiter/status/unknown-client",
+            "text": "Our client is hiring a product manager. We will share the company and application details later."
+          },
+          {
+            "id": "author_profile",
+            "url": "https://social.example/pine_recruiter",
+            "text": "Recruiter at Pine Staffing. I recruit for client companies."
+          }
+        ]
+      },
+      "expected": {
+        "company_name": null,
+        "routes": [],
+        "needs_lookup": true
+      }
+    },
+    {
+      "id": "sales-contact",
+      "input": {
+        "post": {
+          "id": "sales-contact",
+          "author": "juniper_founder",
+          "text": "Juniper Tools is hiring an engineer. Application details coming soon.",
+          "url": "https://social.example/juniper_founder/status/sales-contact"
+        },
+        "sources": [
+          {
+            "id": "post",
+            "url": "https://social.example/juniper_founder/status/sales-contact",
+            "text": "Juniper Tools is hiring an engineer. Application details coming soon."
+          },
+          {
+            "id": "company_site",
+            "url": "https://juniper.example",
+            "text": "Juniper Tools. Contact our sales team to book a product demo: https://juniper.example/contact. This page contains no hiring instructions."
+          }
+        ]
+      },
+      "expected": {
+        "company_name": "Juniper Tools",
+        "routes": [],
+        "needs_lookup": true
+      }
+    }
+  ]
+}

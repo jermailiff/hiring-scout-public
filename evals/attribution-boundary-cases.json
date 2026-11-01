@@ -1,0 +1,234 @@
+{
+  "suiteId": "hiring-attribution-boundaries-v1",
+  "qualification": "Four synthetic development examples explicitly labeled with Jermaine on 2026-10-26. Check decision and original opportunity identity separately. Not held-out accuracy. Local-only suite; no live workflow selector or model results.",
+  "cases": [
+    {
+      "id": "quote-original-company",
+      "input": {
+        "text": "Come build with us.",
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": null,
+        "evidence_graph": {
+          "target_id": "sam",
+          "posts": [
+            {
+              "id": "sam",
+              "author": "Sam",
+              "text": "Come build with us.",
+              "url": null
+            },
+            {
+              "id": "alex",
+              "author": "Alex",
+              "text": "We’re hiring our first product engineer at Company A.",
+              "url": null
+            }
+          ],
+          "connections": [
+            {
+              "from_id": "sam",
+              "to_id": "alex",
+              "relationship": "quoted_post",
+              "verified": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "decision": "keep",
+        "reason": "The verified quote establishes employment at Company A. Sam’s affiliation is unknown; do not invent a separate opportunity.",
+        "attribution": {
+          "lead_type": "shared_opportunity",
+          "subject_source_id": "alex",
+          "company": "Company A"
+        }
+      }
+    },
+    {
+      "id": "reply-nearest-company",
+      "input": {
+        "text": "Come build with us.",
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": null,
+        "evidence_graph": {
+          "target_id": "casey",
+          "posts": [
+            {
+              "id": "casey",
+              "author": "Casey",
+              "text": "Come build with us.",
+              "url": null
+            },
+            {
+              "id": "sam",
+              "author": "Sam",
+              "text": "We’re hiring at Company B too.",
+              "url": null
+            },
+            {
+              "id": "alex",
+              "author": "Alex",
+              "text": "We’re hiring engineers at Company A.",
+              "url": null
+            }
+          ],
+          "connections": [
+            {
+              "from_id": "casey",
+              "to_id": "sam",
+              "relationship": "direct_reply",
+              "verified": true
+            },
+            {
+              "from_id": "sam",
+              "to_id": "alex",
+              "relationship": "direct_reply",
+              "verified": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "decision": "keep",
+        "reason": "The direct parent establishes Company B’s recruitment. Casey’s affiliation is unknown; neither infer a new employer nor inherit Company A.",
+        "attribution": {
+          "lead_type": "shared_opportunity",
+          "subject_source_id": "sam",
+          "company": "Company B"
+        }
+      }
+    },
+    {
+      "id": "two-connections",
+      "input": {
+        "text": "Come build with us.",
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": null,
+        "evidence_graph": {
+          "target_id": "alex-followup",
+          "posts": [
+            {
+              "id": "alex-followup",
+              "author": "Alex",
+              "text": "Come build with us.",
+              "url": null
+            },
+            {
+              "id": "sam",
+              "author": "Sam",
+              "text": "Which team?",
+              "url": null
+            },
+            {
+              "id": "alex-opening",
+              "author": "Alex",
+              "text": "We’re hiring engineers at Company A.",
+              "url": null
+            }
+          ],
+          "connections": [
+            {
+              "from_id": "alex-followup",
+              "to_id": "sam",
+              "relationship": "direct_reply",
+              "verified": true
+            },
+            {
+              "from_id": "sam",
+              "to_id": "alex-opening",
+              "relationship": "direct_reply",
+              "verified": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "decision": "keep",
+        "reason": "The same recruiter’s invitation refers to the original Company A opportunity through two verified connections; retain that original opportunity identity.",
+        "attribution": {
+          "lead_type": "shared_opportunity",
+          "subject_source_id": "alex-opening",
+          "company": "Company A"
+        }
+      }
+    },
+    {
+      "id": "three-connections",
+      "input": {
+        "text": "Come build with us.",
+        "links": [],
+        "author_type": "unknown",
+        "input_incomplete": false,
+        "context": null,
+        "hiring_reference": null,
+        "evidence_graph": {
+          "target_id": "alex-followup",
+          "posts": [
+            {
+              "id": "alex-followup",
+              "author": "Alex",
+              "text": "Come build with us.",
+              "url": null
+            },
+            {
+              "id": "casey",
+              "author": "Casey",
+              "text": "Alex, can you answer?",
+              "url": null
+            },
+            {
+              "id": "sam",
+              "author": "Sam",
+              "text": "Which team?",
+              "url": null
+            },
+            {
+              "id": "alex-opening",
+              "author": "Alex",
+              "text": "We’re hiring engineers at Company A.",
+              "url": null
+            }
+          ],
+          "connections": [
+            {
+              "from_id": "alex-followup",
+              "to_id": "casey",
+              "relationship": "direct_reply",
+              "verified": true
+            },
+            {
+              "from_id": "casey",
+              "to_id": "sam",
+              "relationship": "direct_reply",
+              "verified": true
+            },
+            {
+              "from_id": "sam",
+              "to_id": "alex-opening",
+              "relationship": "direct_reply",
+              "verified": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "decision": "skip",
+        "reason": "Employment evidence requires three connections, exceeding the agreed limit. The original hiring post should be captured separately; this does not assert it actually was captured.",
+        "attribution": {
+          "lead_type": null,
+          "subject_source_id": null,
+          "company": null
+        }
+      }
+    }
+  ]
+}

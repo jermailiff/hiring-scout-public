@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+.local/
+.wrangler/
+.dev.vars*
+
+# Environment variables
+.env
+.env.local
+
+# TypeScript build info
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

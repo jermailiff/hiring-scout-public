@@ -1,0 +1,11 @@
+{
+  "name": "hiring-scout-model-test",
+  "main": "model-test-worker.ts",
+  "compatibility_date": "2026-10-23",
+  "workers_dev": false,
+  "preview_urls": false,
+  "ai": {
+    "binding": "AI",
+    "remote": true
+  }
+}
